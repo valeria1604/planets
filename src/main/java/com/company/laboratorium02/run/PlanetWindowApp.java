@@ -46,6 +46,8 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
     JButton saveToDocumentButton = new JButton("Write data to the document");
     JButton infoButton = new JButton("About author");
     JButton exitButton = new JButton("End program");
+    JButton serializableWriteButton = new JButton("Write serializable data to the document");
+
 
     public PlanetWindowApp() {
         setTitle("PlanetWindowsApp");
@@ -73,6 +75,7 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         saveToDocumentButton.addActionListener(this);
         infoButton.addActionListener(this);
         exitButton.addActionListener(this);
+        serializableWriteButton.addActionListener(this);
 
         JPanel panel = new JPanel();
 
@@ -98,6 +101,7 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         panel.add(saveToDocumentButton);
         panel.add(infoButton);
         panel.add(exitButton);
+        panel.add(serializableWriteButton);
 
         setContentPane(panel);
 
@@ -137,6 +141,13 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
                 if (fileName == null || fileName.equals("")) return;
                 Planet.writeToTheDocument(fileName, currentPlanet);
             }
+
+            if(eventSource == serializableWriteButton ){
+                String fileName = JOptionPane.showInputDialog("Write the name of document");
+                if (fileName == null || fileName.equals("")) return;
+                Planet.writeObjectToTheDocument(fileName, currentPlanet);
+            }
+
             if (eventSource == loadFromDocumentButton) {
                 String fileName = JOptionPane.showInputDialog("Write the name of document");
                 if (fileName == null || fileName.equals("")) return;
@@ -152,6 +163,7 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
             if (eventSource == exitButton) {
                 System.exit(0);
             }
+
         } catch (PlanetException exception) {
             JOptionPane.showMessageDialog(this, exception.getMessage(), "Unexpected error", JOptionPane.ERROR_MESSAGE);
         }

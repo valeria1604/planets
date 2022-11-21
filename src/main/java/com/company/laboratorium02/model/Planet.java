@@ -2,7 +2,7 @@ package com.company.laboratorium02.model;
 
 import java.io.*;
 
-public class Planet {
+public class Planet implements Serializable {
     public String name;
     private PlanetColour colour;
     private int mass;
@@ -57,6 +57,35 @@ public class Planet {
         } catch (FileNotFoundException e) {
             throw new PlanetException("Document wasn't found " + fileName);
         }
+    }
+
+//    public static void writeObject (ObjectOutputStream oos, Planet planet) throws PlanetException {
+//        try {
+//            oos.defaultWriteObject();
+//            oos.writeObject(planet.getName());
+//            oos.writeObject(planet.getColour());
+//            oos.writeInt(planet.getMass());
+//            oos.writeFloat(planet.getRadius());
+//            oos.writeInt(planet.getSatellitesCount());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public static void writeObjectToTheDocument(String fileName, Planet planet) throws PlanetException{
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(fileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(planet);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new PlanetException("Document wasn't found " + fileName);
+        } catch (IOException e) {
+            throw new PlanetException("IOException ");
+        }
+
     }
 
     public String getName() {
