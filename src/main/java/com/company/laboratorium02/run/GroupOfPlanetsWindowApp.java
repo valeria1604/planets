@@ -1,9 +1,11 @@
-package com.company.laboratorium02;
+package com.company.laboratorium02.run;
 
 
+import com.company.laboratorium02.ui.ViewGroupOfPlanets;
 import com.company.laboratorium02.model.Planet;
 import com.company.laboratorium02.model.PlanetColour;
 import com.company.laboratorium02.model.PlanetException;
+import com.company.laboratorium02.ui.PlanetWindowDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +60,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
     }
 
 
-    private Vector<Planet> currentGroupofPlanets;
+    private final Vector<Planet> currentGroupOfPlanets;
     JButton newPlanetButton = new JButton("New planet");
     JButton deletePlanetButton = new JButton("Delete planet");
     JButton editPlanetButton = new JButton("Change planet");
@@ -70,9 +72,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
     JButton buttonSortMass = new JButton("Sort by the mass");
     JButton buttonSortColour = new JButton("Sort by the colour");
 
-
     ViewGroupOfPlanets viewList;
-
 
     public GroupOfPlanetsWindowApp(Window parent) {
         this(parent, new Vector<Planet>());
@@ -92,10 +92,10 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             setLocation(location);
         } else setLocationRelativeTo(null);
 
-        currentGroupofPlanets = group;
+        currentGroupOfPlanets = group;
 
         // Utwotrzenie tabeli z list� os�b nale��cych do grupy
-        viewList = new ViewGroupOfPlanets(currentGroupofPlanets, 400, 250);
+        viewList = new ViewGroupOfPlanets(currentGroupOfPlanets, 400, 250);
         viewList.refreshView();
 
         // Dodanie s�uchaczy zdarze� do wszystkich przycisk�w.
@@ -148,13 +148,13 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
         try {
             if (source == newPlanetButton) {
                 Planet newPlanet = PlanetWindowDialog.createPlanet(this);
-                if (newPlanet != null) currentGroupofPlanets.add(newPlanet);
+                if (newPlanet != null) currentGroupOfPlanets.add(newPlanet);
             }
 
             if (source == editPlanetButton) {
                 int index = viewList.getSelectedIndex();
                 if (index >= 0) {
-                    Iterator<Planet> iterator = currentGroupofPlanets.iterator();
+                    Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
                     while (index-- > 0)
                         iterator.next();
                     PlanetWindowDialog.changePlanet(this, iterator.next());
@@ -164,7 +164,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             if (source == deletePlanetButton) {
                 int index = viewList.getSelectedIndex();
                 if (index >= 0) {
-                    Iterator<Planet> iterator = currentGroupofPlanets.iterator();
+                    Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
                     while (index-- >= 0)
                         iterator.next();
                     iterator.remove();
@@ -175,13 +175,13 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
                 String fileName = JOptionPane.showInputDialog("Write the name of document");
                 if (fileName == null || fileName.equals("")) return;
                 Planet planet = Planet.readFromFile(fileName);
-                currentGroupofPlanets.add(planet);
+                currentGroupOfPlanets.add(planet);
             }
 
             if (source == saveToDocumentButton) {
                 int index = viewList.getSelectedIndex();
                 if (index >= 0) {
-                    Iterator<Planet> iterator = currentGroupofPlanets.iterator();
+                    Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
                     while (index-- > 0)
                         iterator.next();
                     Planet planet = iterator.next();
@@ -205,7 +205,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
 //            }
 
             if (source == buttonSortMass) {
-                currentGroupofPlanets.sort(new Comparator<Planet>() {
+                currentGroupOfPlanets.sort(new Comparator<Planet>() {
 
                     @Override
                     public int compare(Planet o1, Planet o2) {
@@ -219,7 +219,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             }
 
             if (source == buttonSortColour) {
-                currentGroupofPlanets.sort(new Comparator<Planet>() {
+                currentGroupOfPlanets.sort(new Comparator<Planet>() {
 
                     @Override
                     public int compare(Planet o1, Planet o2) {

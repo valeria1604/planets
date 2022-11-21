@@ -1,4 +1,4 @@
-package com.company.laboratorium02;
+package com.company.laboratorium02.ui;
 
 import com.company.laboratorium02.model.Planet;
 
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.Serial;
 import java.util.Vector;
 
-class ViewGroupOfPlanets extends JScrollPane {
+public class ViewGroupOfPlanets extends JScrollPane {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ class ViewGroupOfPlanets extends JScrollPane {
         setViewportView(table);
     }
 
-    void refreshView() {
+    public void refreshView() {
         tableModel.setRowCount(0);
         for (Planet p : group) {
             String[] row = {p.getName(), String.valueOf(p.getMass()), String.valueOf(p.getRadius()), p.getColour().toString(), String.valueOf(p.getSatellitesCount())};
@@ -47,7 +47,7 @@ class ViewGroupOfPlanets extends JScrollPane {
         }
     }
 
-    int getSelectedIndex() {
+    public int getSelectedIndex() {
         int index = table.getSelectedRow();
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "No planet was chosen", "Unexpected error", JOptionPane.ERROR_MESSAGE);

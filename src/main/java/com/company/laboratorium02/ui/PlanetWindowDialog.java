@@ -1,4 +1,4 @@
-package com.company.laboratorium02;
+package com.company.laboratorium02.ui;
 
 import com.company.laboratorium02.model.Planet;
 import com.company.laboratorium02.model.PlanetColour;
@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
 
-public class PlanetWindowDialog extends JFrame implements ActionListener {
+public class PlanetWindowDialog extends JDialog implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class PlanetWindowDialog extends JFrame implements ActionListener {
     JButton CancelButton = new JButton("Cancel");
 
     public PlanetWindowDialog(Window parent, Planet planet) {
-        //TODO super(parent, ModalityType.DOCUMENT_MODAL);
+        super(parent, Dialog.ModalityType.DOCUMENT_MODAL);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(220, 200);

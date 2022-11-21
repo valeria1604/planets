@@ -1,7 +1,8 @@
-package com.company.laboratorium02;
+package com.company.laboratorium02.run;
 
 import com.company.laboratorium02.model.Planet;
 import com.company.laboratorium02.model.PlanetException;
+import com.company.laboratorium02.ui.PlanetWindowDialog;
 
 import javax.swing.*;
 import java.awt.*;
