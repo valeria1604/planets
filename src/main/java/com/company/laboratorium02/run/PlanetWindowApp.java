@@ -1,3 +1,9 @@
+/**
+ * Nazwa: Planety
+ * Autor: Valeriia Tykhoniuk (266319)
+ * Data utworzenia: 11.10.2022
+ */
+
 package com.company.laboratorium02.run;
 
 import com.company.laboratorium02.model.Planet;
@@ -8,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.Serial;
 
 public class PlanetWindowApp extends JFrame implements ActionListener {
@@ -22,7 +29,6 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
 
     private Planet currentPlanet;
 
-    Font font = new Font("Arial", Font.PLAIN, 12);
 
     //etykiety
     JLabel nameLabel = new JLabel("Name: ");
@@ -47,7 +53,7 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
     JButton infoButton = new JButton("About author");
     JButton exitButton = new JButton("End program");
     JButton serializableWriteButton = new JButton("Write serializable data to the document");
-
+    JButton serializableReadButton = new JButton("Read serializable data from the document");
 
     public PlanetWindowApp() {
         setTitle("PlanetWindowsApp");
@@ -56,11 +62,12 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
 
-        nameLabel.setFont(font);
-        colourLabel.setFont(font);
-        massLabel.setFont(font);
-        radiusLabel.setFont(font);
-        satellitesLabel.setFont(font);
+
+        nameLabel.setForeground(Color.white);
+        colourLabel.setForeground(Color.white);
+        massLabel.setForeground(Color.white);
+        radiusLabel.setForeground(Color.white);
+        satellitesLabel.setForeground(Color.white);
 
         nameField.setEditable(false);
         colourField.setEditable(false);
@@ -76,6 +83,7 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         infoButton.addActionListener(this);
         exitButton.addActionListener(this);
         serializableWriteButton.addActionListener(this);
+        serializableReadButton.addActionListener(this);
 
         JPanel panel = new JPanel();
 
@@ -102,6 +110,11 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         panel.add(infoButton);
         panel.add(exitButton);
         panel.add(serializableWriteButton);
+        panel.add(serializableReadButton);
+
+        panel.add(new JLabel(new ImageIcon("src/main/java/com/company/laboratorium02/01.jpg")));
+
+        panel.setBackground(new java.awt.Color(6, 6, 28));
 
         setContentPane(panel);
 
@@ -142,24 +155,39 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
                 Planet.writeToTheDocument(fileName, currentPlanet);
             }
 
-            if(eventSource == serializableWriteButton ){
+            if (eventSource == serializableWriteButton) {
                 String fileName = JOptionPane.showInputDialog("Write the name of document");
                 if (fileName == null || fileName.equals("")) return;
                 Planet.writeObjectToTheDocument(fileName, currentPlanet);
             }
 
             if (eventSource == loadFromDocumentButton) {
-                String fileName = JOptionPane.showInputDialog("Write the name of document");
-                if (fileName == null || fileName.equals("")) return;
-                currentPlanet = Planet.readFromFile(fileName);
+                JFileChooser fc = new JFileChooser();
+                int i = fc.showOpenDialog(this);
+                if (i == JFileChooser.APPROVE_OPTION) {
+                    File f = fc.getSelectedFile();
+                    currentPlanet = Planet.readFromFile(f);
+                }
             }
+
+            if (eventSource == serializableReadButton) {
+                JFileChooser fc = new JFileChooser();
+                int i = fc.showOpenDialog(this);
+                if (i == JFileChooser.APPROVE_OPTION) {
+                    File f = fc.getSelectedFile();
+                    currentPlanet = Planet.readObjectToTheDocument(f);
+                }
+            }
+
             if (eventSource == editPlanetButton) {
                 if (currentPlanet == null) throw new PlanetException("Any planet wasn't changed");
                 PlanetWindowDialog.changePlanet(this, currentPlanet);
             }
+
             if (eventSource == infoButton) {
                 JOptionPane.showMessageDialog(this, AUTHOR);
             }
+
             if (eventSource == exitButton) {
                 System.exit(0);
             }

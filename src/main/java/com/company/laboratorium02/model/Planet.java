@@ -1,3 +1,9 @@
+/**
+ * Nazwa: Planety
+ * Autor: Valeriia Tykhoniuk (266319)
+ * Data utworzenia: 11.10.2022
+ */
+
 package com.company.laboratorium02.model;
 
 import java.io.*;
@@ -22,25 +28,27 @@ public class Planet implements Serializable {
     }
 
     public static Planet readFromFile(BufferedReader reader) throws PlanetException {
+        Planet planet;
         try {
             String line = reader.readLine();
             String[] txt = line.split(";");
-            Planet planet = new Planet(txt[0]);
+            planet = new Planet(txt[0]);
             planet.setMass(Integer.parseInt(txt[1]));
             planet.setRadius(Float.parseFloat(txt[2]));
             planet.setSatellitesCount(Integer.parseInt(txt[3]));
             planet.setColour(txt[4]);
-            return planet;
         } catch (IOException e) {
             throw new PlanetException("Reading wasn't successful");
         }
+        return planet;
     }
 
-    public static Planet readFromFile(String file_name) throws PlanetException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(file_name)))) {
-            return Planet.readFromFile(reader);
+
+    public static Planet readFromFile(File file) throws PlanetException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            return readFromFile(reader);
         } catch (FileNotFoundException e) {
-            throw new PlanetException("Document wasn't found" + file_name);
+            throw new PlanetException("Document wasn't found" + file);
         } catch (IOException e) {
             throw new PlanetException("Reading wasn't succesful");
         }
@@ -52,27 +60,33 @@ public class Planet implements Serializable {
     }
 
     public static void writeToTheDocument(String fileName, Planet planet) throws PlanetException {
-        try (PrintWriter writer = new PrintWriter(fileName)) {
+        writeToTheDocument(new File(fileName), planet);
+    }
+
+    public static void writeToTheDocument(File file, Planet planet) throws PlanetException {
+        try (PrintWriter writer = new PrintWriter(file)) {
             printToFile(writer, planet);
         } catch (FileNotFoundException e) {
-            throw new PlanetException("Document wasn't found " + fileName);
+            throw new PlanetException("Document wasn't found " + file);
         }
     }
 
-//    public static void writeObject (ObjectOutputStream oos, Planet planet) throws PlanetException {
-//        try {
-//            oos.defaultWriteObject();
-//            oos.writeObject(planet.getName());
-//            oos.writeObject(planet.getColour());
-//            oos.writeInt(planet.getMass());
-//            oos.writeFloat(planet.getRadius());
-//            oos.writeInt(planet.getSatellitesCount());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static Planet readObjectToTheDocument(File fileName) throws PlanetException {
+        FileInputStream file = null;
+        Planet planet = null;
+        try {
+            file = new FileInputStream(fileName);
+            ObjectInputStream reader = null;
+            reader = new ObjectInputStream(file);
+            planet = (Planet) reader.readObject();
+            reader.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return planet;
+    }
 
-    public static void writeObjectToTheDocument(String fileName, Planet planet) throws PlanetException{
+    public static void writeObjectToTheDocument(String fileName, Planet planet) throws PlanetException {
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(fileName);

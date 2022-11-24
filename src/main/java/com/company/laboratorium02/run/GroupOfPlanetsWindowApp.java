@@ -1,16 +1,24 @@
+/**
+ * Nazwa: Planety
+ * Autor: Valeriia Tykhoniuk (266319)
+ * Data utworzenia: 11.10.2022
+ */
+
 package com.company.laboratorium02.run;
 
 
-import com.company.laboratorium02.ui.ViewGroupOfPlanets;
 import com.company.laboratorium02.model.Planet;
 import com.company.laboratorium02.model.PlanetColour;
 import com.company.laboratorium02.model.PlanetException;
 import com.company.laboratorium02.ui.PlanetWindowDialog;
+import com.company.laboratorium02.ui.ViewGroupOfPlanets;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.Serial;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -28,7 +36,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             availablePlanet = new Planet("Earth");
             availablePlanet.setColour(PlanetColour.BLUE);
             availablePlanet.setMass(60);
-            availablePlanet.setRadius(400);
+            availablePlanet.setRadius(780);
             availablePlanet.setSatellitesCount(1);
             group.add(availablePlanet);
 
@@ -41,17 +49,15 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
 
             availablePlanet = new Planet("Saturn");
             availablePlanet.setColour(PlanetColour.ORANGE);
-            availablePlanet.setMass(79);
-            availablePlanet.setRadius(3488);
-            availablePlanet.setSatellitesCount(83);
+            availablePlanet.setMass(54);
+            availablePlanet.setRadius(348);
+            availablePlanet.setSatellitesCount(2);
             group.add(availablePlanet);
 
         } catch (PlanetException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Unexpected error", JOptionPane.ERROR_MESSAGE);
         }
 
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new GroupOfPlanetsWindowApp(null, group);
@@ -67,16 +73,10 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
     JButton loadFromDocumentButton = new JButton("Read data from document");
     JButton saveToDocumentButton = new JButton("Write data to the document");
     JButton infoButton = new JButton("About author");
-
-    JButton buttonSortName = new JButton("Sort by the name");
     JButton buttonSortMass = new JButton("Sort by the mass");
     JButton buttonSortColour = new JButton("Sort by the colour");
 
     ViewGroupOfPlanets viewList;
-
-    public GroupOfPlanetsWindowApp(Window parent) {
-        this(parent, new Vector<Planet>());
-    }
 
     public GroupOfPlanetsWindowApp(Window parent, Vector<Planet> group) {
 
@@ -84,6 +84,7 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
 
         setTitle("Changing the group");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         setSize(450, 450);
         setResizable(false);
         if (parent != null) {
@@ -94,14 +95,10 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
 
         currentGroupOfPlanets = group;
 
-        // Utwotrzenie tabeli z list� os�b nale��cych do grupy
         viewList = new ViewGroupOfPlanets(currentGroupOfPlanets, 400, 250);
         viewList.refreshView();
 
-        // Dodanie s�uchaczy zdarze� do wszystkich przycisk�w.
-        // UWAGA: s�uchaczem zdarze� b�dzie metoda actionPerformed
-        // zaimplementowana w tej klasie i wywo�ana dla
-        // bie��cej instancji okna aplikacji - referencja this
+
         newPlanetButton.addActionListener(this);
         deletePlanetButton.addActionListener(this);
         editPlanetButton.addActionListener(this);
@@ -109,18 +106,10 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
         saveToDocumentButton.addActionListener(this);
         infoButton.addActionListener(this);
 
-        buttonSortName.addActionListener(this);
         buttonSortMass.addActionListener(this);
         buttonSortColour.addActionListener(this);
 
-
-        // Utworzenie g��wnego panelu okna aplikacji.
-        // Domy�lnym mened�erem rozk�adu dla panelu b�dzie
-        // FlowLayout, kt�ry uk�ada wszystkie komponenty jeden za drugim.
         JPanel panel = new JPanel();
-
-        // Dodanie i rozmieszczenie na panelu wszystkich
-        // komponent�w GUI.
 
         panel.add(viewList);
 
@@ -131,11 +120,12 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
         panel.add(saveToDocumentButton);
         panel.add(infoButton);
 
-        panel.add(buttonSortName);
         panel.add(buttonSortMass);
         panel.add(buttonSortColour);
 
         setContentPane(panel);
+
+        panel.setBackground(new java.awt.Color(6, 6, 28));
 
         setVisible(true);
     }
@@ -172,10 +162,13 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             }
 
             if (source == loadFromDocumentButton) {
-                String fileName = JOptionPane.showInputDialog("Write the name of document");
-                if (fileName == null || fileName.equals("")) return;
-                Planet planet = Planet.readFromFile(fileName);
-                currentGroupOfPlanets.add(planet);
+                JFileChooser fc = new JFileChooser();
+                int i = fc.showOpenDialog(this);
+                if (i == JFileChooser.APPROVE_OPTION) {
+                    File f = fc.getSelectedFile();
+                    Planet planet = Planet.readFromFile(f);
+                    currentGroupOfPlanets.add(planet);
+                }
             }
 
             if (source == saveToDocumentButton) {
@@ -192,21 +185,8 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
                 }
             }
 
-//            if (source == buttonSortName) {
-//                currentGroupofPlanets.sort( new Comparator<Planet>() {
-//                    TODO
-//                    @Override
-//                    public int compare(Planet o1, Planet o2) {
-//                        int result = o1.getLastName().compareTo(o2.getLastName());
-//                        if (result == 0) result = o1.getFirstName().compareTo(o2.getFirstName());
-//                        return result;
-//                    }
-//                });
-//            }
-
             if (source == buttonSortMass) {
                 currentGroupOfPlanets.sort(new Comparator<Planet>() {
-
                     @Override
                     public int compare(Planet o1, Planet o2) {
                         if (o1.getMass() < o2.getMass())
@@ -236,7 +216,6 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Unexpected error", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Aktualizacja zawarto�ci tabeli z list� os�b.
         viewList.refreshView();
     }
 }

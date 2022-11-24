@@ -1,12 +1,21 @@
+/**
+ * Nazwa: Planety
+ * Autor: Valeriia Tykhoniuk (266319)
+ * Data utworzenia: 11.10.2022
+ */
+
 package com.company.laboratorium02.model;
 
 public enum PlanetColour {
     UNKNOWN("-------"),
-    BLUE("Blue"),
-    VIOLET("Violet"),
     RED("Red"),
+    ORANGE("Orange"),
     YELLOW("Yellow"),
-    ORANGE("Orange");
+    BLUE("Blue"),
+    VIOLET("Violet");
+
+
+
 
     private String planetColour;
 

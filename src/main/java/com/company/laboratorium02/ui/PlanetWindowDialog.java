@@ -1,3 +1,9 @@
+/**
+ * Nazwa: Planety
+ * Autor: Valeriia Tykhoniuk (266319)
+ * Data utworzenia: 11.10.2022
+ */
+
 package com.company.laboratorium02.ui;
 
 import com.company.laboratorium02.model.Planet;
@@ -36,8 +42,9 @@ public class PlanetWindowDialog extends JDialog implements ActionListener {
         super(parent, Dialog.ModalityType.DOCUMENT_MODAL);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(220, 200);
+        setSize(170, 250);
         setLocationRelativeTo(parent);
+        setResizable(false);
 
         this.planet = planet;
 
@@ -55,6 +62,12 @@ public class PlanetWindowDialog extends JDialog implements ActionListener {
         CancelButton.addActionListener(this);
 
         JPanel panel = new JPanel();
+
+        nameLabel.setForeground(Color.white);
+        colourLabel.setForeground(Color.white);
+        massLabel.setForeground(Color.white);
+        radiusLabel.setForeground(Color.white);
+        satellitesLabel.setForeground(Color.white);
 
         panel.add(nameLabel);
         panel.add(nameField);
@@ -76,6 +89,8 @@ public class PlanetWindowDialog extends JDialog implements ActionListener {
 
         setContentPane(panel);
 
+        panel.setBackground(new java.awt.Color(6, 6, 28));
+
         setVisible(true);
     }
 
@@ -93,7 +108,7 @@ public class PlanetWindowDialog extends JDialog implements ActionListener {
                 }
                 planet.setColour((PlanetColour) colourField.getSelectedItem());
                 planet.setMass(Integer.parseInt(massField.getText()));
-                planet.setRadius(Integer.parseInt(radiusField.getText()));
+                planet.setRadius(Float.parseFloat(radiusField.getText()));
                 planet.setSatellitesCount(Integer.parseInt(satellitesField.getText()));
 
                 dispose();
@@ -105,7 +120,6 @@ public class PlanetWindowDialog extends JDialog implements ActionListener {
         if (eventsource == CancelButton) {
             dispose();
         }
-
     }
 
     public static Planet createPlanet(Window parent) {
