@@ -62,7 +62,6 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
 
-
         nameLabel.setForeground(Color.white);
         colourLabel.setForeground(Color.white);
         massLabel.setForeground(Color.white);

@@ -15,7 +15,6 @@ import com.company.laboratorium02.ui.ViewGroupOfPlanets;
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -98,7 +97,6 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
         viewList = new ViewGroupOfPlanets(currentGroupOfPlanets, 400, 250);
         viewList.refreshView();
 
-
         newPlanetButton.addActionListener(this);
         deletePlanetButton.addActionListener(this);
         editPlanetButton.addActionListener(this);
@@ -142,21 +140,16 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             }
 
             if (source == editPlanetButton) {
-                int index = viewList.getSelectedIndex();
-                if (index >= 0) {
-                    Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
-                    while (index-- > 0)
-                        iterator.next();
+                Iterator<Planet> iterator = getIterator();
+                if (iterator != null) {
                     PlanetWindowDialog.changePlanet(this, iterator.next());
                 }
             }
 
             if (source == deletePlanetButton) {
-                int index = viewList.getSelectedIndex();
-                if (index >= 0) {
-                    Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
-                    while (index-- >= 0)
-                        iterator.next();
+                Iterator<Planet> iterator = getIterator();
+                if (iterator != null) {
+                    iterator.next();
                     iterator.remove();
                 }
             }
@@ -172,13 +165,9 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
             }
 
             if (source == saveToDocumentButton) {
-                int index = viewList.getSelectedIndex();
-                if (index >= 0) {
-                    Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
-                    while (index-- > 0)
-                        iterator.next();
+                Iterator<Planet> iterator = getIterator();
+                if (iterator != null) {
                     Planet planet = iterator.next();
-
                     String fileName = JOptionPane.showInputDialog("Write the name of document");
                     if (fileName == null || fileName.equals("")) return;  // Cancel lub pusta nazwa pliku.
                     Planet.writeToTheDocument(fileName, planet);
@@ -217,6 +206,19 @@ public class GroupOfPlanetsWindowApp extends JDialog implements ActionListener {
         }
 
         viewList.refreshView();
+    }
+
+    private Iterator<Planet> getIterator() {
+        int index = viewList.getSelectedIndex();
+        if (index >= 0) {
+            Iterator<Planet> iterator = currentGroupOfPlanets.iterator();
+            while (index-- > 0)
+                iterator.next();
+            return iterator;
+
+        }
+        return null;
+
     }
 }
 

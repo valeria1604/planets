@@ -15,8 +15,6 @@ public enum PlanetColour {
     VIOLET("Violet");
 
 
-
-
     private String planetColour;
 
     PlanetColour(String planetColour) {

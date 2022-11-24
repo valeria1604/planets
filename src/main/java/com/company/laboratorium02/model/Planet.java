@@ -43,7 +43,6 @@ public class Planet implements Serializable {
         return planet;
     }
 
-
     public static Planet readFromFile(File file) throws PlanetException {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             return readFromFile(reader);

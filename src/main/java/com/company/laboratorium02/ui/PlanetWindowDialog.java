@@ -112,8 +112,10 @@ public class PlanetWindowDialog extends JDialog implements ActionListener {
                 planet.setSatellitesCount(Integer.parseInt(satellitesField.getText()));
 
                 dispose();
-            } catch (PlanetException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            } catch (PlanetException exx) {
+                JOptionPane.showMessageDialog(this, exx.getMessage(), "Unexpected error", JOptionPane.ERROR_MESSAGE);
+            } catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Number format exception", JOptionPane.ERROR_MESSAGE);
             }
         }
 
