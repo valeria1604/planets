@@ -4,11 +4,11 @@
  * Data utworzenia: 11.10.2022
  */
 
-package com.company.laboratorium02.run;
+package com.company.laboratorium03.run;
 
-import com.company.laboratorium02.model.Planet;
-import com.company.laboratorium02.model.PlanetException;
-import com.company.laboratorium02.ui.PlanetWindowDialog;
+import com.company.laboratorium03.model.Planet;
+import com.company.laboratorium03.model.PlanetException;
+import com.company.laboratorium03.ui.PlanetWindowDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -111,7 +111,7 @@ public class PlanetWindowApp extends JFrame implements ActionListener {
         panel.add(serializableWriteButton);
         panel.add(serializableReadButton);
 
-        panel.add(new JLabel(new ImageIcon("src/main/java/com/company/laboratorium02/01.jpg")));
+        panel.add(new JLabel(new ImageIcon("src/main/resources/01.jpg")));
 
         panel.setBackground(new java.awt.Color(6, 6, 28));
 

@@ -4,7 +4,7 @@
  * Data utworzenia: 11.10.2022
  */
 
-package com.company.laboratorium02.model;
+package com.company.laboratorium03.model;
 
 public enum PlanetColour {
     UNKNOWN("-------"),

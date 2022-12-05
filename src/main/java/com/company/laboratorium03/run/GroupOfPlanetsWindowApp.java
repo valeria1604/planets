@@ -4,14 +4,14 @@
  * Data utworzenia: 11.10.2022
  */
 
-package com.company.laboratorium02.run;
+package com.company.laboratorium03.run;
 
 
-import com.company.laboratorium02.model.Planet;
-import com.company.laboratorium02.model.PlanetColour;
-import com.company.laboratorium02.model.PlanetException;
-import com.company.laboratorium02.ui.PlanetWindowDialog;
-import com.company.laboratorium02.ui.ViewGroupOfPlanets;
+import com.company.laboratorium03.model.Planet;
+import com.company.laboratorium03.model.PlanetColour;
+import com.company.laboratorium03.model.PlanetException;
+import com.company.laboratorium03.ui.PlanetWindowDialog;
+import com.company.laboratorium03.ui.ViewGroupOfPlanets;
 
 import javax.swing.*;
 import java.awt.*;

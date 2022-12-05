@@ -4,9 +4,9 @@
  * Data utworzenia: 11.10.2022
  */
 
-package com.company.laboratorium02.ui;
+package com.company.laboratorium03.ui;
 
-import com.company.laboratorium02.model.Planet;
+import com.company.laboratorium03.model.Planet;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
