@@ -8,7 +8,7 @@ package com.company.laboratorium03.model;
 
 import java.io.*;
 
-public class Planet implements Serializable {
+public class Planet implements Serializable, Comparable<Planet> {
     public String name;
     private PlanetColour colour;
     private int mass;
@@ -178,4 +178,37 @@ public class Planet implements Serializable {
                 ", satellitesCount=" + satellitesCount +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Planet planet = (Planet) o;
+
+        if (mass != planet.mass) return false;
+        if (Float.compare(planet.radius, radius) != 0) return false;
+        if (satellitesCount != planet.satellitesCount) return false;
+        if (!name.equals(planet.name)) return false;
+        return colour == planet.colour;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (colour != null ? colour.hashCode() : 0);
+        result = 31 * result + mass;
+        result = 31 * result + (radius != +0.0f ? Float.floatToIntBits(radius) : 0);
+        result = 31 * result + satellitesCount;
+        return result;
+    }
+
+    public int compareTo(Planet o) {
+        int result = this.name.compareTo(o.name);
+        if (result == 0) {
+            result = this.colour.compareTo(o.colour);
+        }
+        return result;
+    }
+
 }
